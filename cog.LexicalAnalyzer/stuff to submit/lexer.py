@@ -5,12 +5,12 @@ import re
 int = r'\d+'
 real = r'\d+\.\d+'
 identifier = r'[a-z][a-z0-9]*'
-keyword = r''
+keyword =
 # separator =
-operator = r'[+-/*=<>|=>|=<]'
+operator = ["+", "-", "/", "*", "=", "<", ">", "=>", "=<"]
 
 
-token_types = '|'.join([int, real, identifier, operator])
+token_types = '|'.join([int, real, identifier, operator, keyword, separator])
 
 def analyze(input):
 
@@ -26,12 +26,6 @@ def analyze(input):
             token_collection.extend(line_tokens)        # add all tokens found to the collection
 
     return token_collection
-
-
-
-
-
-
 
 
 def main():
