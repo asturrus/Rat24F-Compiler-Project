@@ -5,8 +5,8 @@ import re
 int = r'\d+'
 real = r'\d+\.\d+'
 identifier = r'[a-z][a-z0-9]*'
-keyword = r''
-# separator =
+keyword = {"while", "if", "integer", "else", "fi", "return", "get", "put", "true", "false", "ret", "boolean", "real", "scan",}
+# separator = {"(", ")", "{", "}", ";", "[", "]", ","}
 operator = r'[+-/*=<>|=>|=<]'
 
 
