@@ -5,9 +5,9 @@ import re
 int = r'\d+'
 real = r'\d+\.\d+'
 identifier = r'[a-z][a-z0-9]*'
-keyword =
-# separator =
-operator = ["+", "-", "/", "*", "=", "<", ">", "=>", "=<"]
+keyword = r'\b(?:while|if|integer|else|fi|return|get|put|true|false|ret|boolean|real|scan)\b'
+separator = r'[()\{\};\[\],]'
+operator = r'[+\-/*<>]|=>|=<'
 
 
 token_types = '|'.join([int, real, identifier, operator, keyword, separator])
@@ -46,14 +46,17 @@ def main():
             continue
         if tokens[i] == '"':
             if is_id:
-                specified_tokens.append([temp.strip(), "string literal"]) #NOT SURE ON STRING LITERAL TOKEN
+                specified_tokens.append([temp.strip(), "string literal"]) # NOT SURE ON STRING LITERAL TOKEN
             is_id = not is_id
             specified_tokens.append(tokens[i], "operator")
         elif re.match(separator, tokens[i]):
             specified_tokens.append(tokens[i], "separator")
 
         elif re.match(operator, tokens[i]):
-            specified_tokens.append(tokens[i], "operator")
+
+            actions = re.findall(r'\b\w{2,}\b|.', tokens[i])
+            for action in actions:
+                specified_tokens.append(action, "operator")
 
         elif re.match(keyword, tokens[i]):
             specified_tokens.append(tokens[i], "keyword")
