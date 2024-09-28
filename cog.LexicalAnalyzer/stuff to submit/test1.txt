@@ -1,4 +1,5 @@
-integer x = 14;
+integer x = 14; [* Initialization of x *]
 while (x < 20) {
+    x = x + 1; [* Incrementation of variable x *]
 
 }
