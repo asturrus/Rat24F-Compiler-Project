@@ -2,15 +2,16 @@
 
 import re
 
-int = r'\d+'
 real = r'\d+\.\d+'
+int = r'\d+'
 identifier = r'[a-z][a-z0-9]*'
-keyword = {"while", "if", "integer", "else", "fi", "return", "get", "put", "true", "false", "ret", "boolean", "real", "scan",}
-# separator = {"(", ")", "{", "}", ";", "[", "]", ","}
-operator = r'[+-/*=<>|=>|=<]'
+keyword = {"while", "if", "integer", "else", "fi", "return", "get", 
+           "put", "true", "false", "boolean", "real", "function",}
+separator = r'[\(\){};,\[\]@]'
+operator = r'<=|>=|!=|==|[+\-*/=<>|]'
 
 
-token_types = '|'.join([int, real, identifier, operator])
+token_types = '|'.join([real, int, identifier, operator, separator])
 
 def analyze(input):
 
@@ -25,12 +26,40 @@ def analyze(input):
 
             token_collection.extend(line_tokens)        # add all tokens found to the collection
 
-    return token_collection
+    return [token for token in token_collection if token.strip()]
 
 
 
+def classify_token(tokens): 
+    specified_tokens = []
+    is_string_literal = False
+    temp = ""
 
+    for i in range(len(tokens)):
+        if is_string_literal:
+            if tokens[i] != '"':
+                temp += " " + tokens[i]
+            else:
+                # Close the string literal
+                specified_tokens.append((temp.strip(), "string literal"))
+                temp = ""
+                is_string_literal = False
+        elif tokens[i] == '"':
+            is_string_literal = True
+        elif tokens[i] in keyword:
+            specified_tokens.append(("keyword", tokens[i]))
+        elif re.fullmatch(separator, tokens[i]):
+            specified_tokens.append(("separator", tokens[i]))
+        elif re.fullmatch(int, tokens[i]):
+            specified_tokens.append(("integer", tokens[i]))
+        elif re.fullmatch(real, tokens[i]):
+            specified_tokens.append(("real", tokens[i]))
+        elif re.fullmatch(identifier, tokens[i]):
+            specified_tokens.append(("identifier", tokens[i]))
+        elif re.fullmatch(operator, tokens[i]):
+            specified_tokens.append(("operator", tokens[i]))
 
+    return specified_tokens
 
 
 
@@ -39,41 +68,15 @@ def main():
     input_file = input("Input a valid test file ending in .txt: ")
     tokens = analyze(input_file)
 
-    tokens = [token for token in tokens if tokens]
+    #tokens = [token for token in tokens if tokens]
 
-    specified_tokens = []
-
-    is_id = False
-    temp = ""
-
-    for i in range(len(tokens)):
-        if is_id and tokens[i] != '"':
-            temp = temp + " " + tokens[i]
-            continue
-        if tokens[i] == '"':
-            if is_id:
-                specified_tokens.append([temp.strip(), "string literal"]) #NOT SURE ON STRING LITERAL TOKEN
-            is_id = not is_id
-            specified_tokens.append(tokens[i], "operator")
-        elif re.match(separator, tokens[i]):
-            specified_tokens.append(tokens[i], "separator")
-
-        elif re.match(operator, tokens[i]):
-            specified_tokens.append(tokens[i], "operator")
-
-        elif re.match(keyword, tokens[i]):
-            specified_tokens.append(tokens[i], "keyword")
-
-        elif re.match(int, tokens[i]):
-            specified_tokens.append(tokens[i], "integer")
-
-        elif re.match(identifier, tokens[i]):
-            specified_tokens.append(tokens[i], "identifier")
-
-        elif re.match(real, tokens[i]):
-            specified_tokens.append(tokens[i], "real")
+    specified_tokens = classify_token(tokens)
 
     print (f'{"token":5} {"":20} {"lexeme":6}')
     print (f'{"-":31}')
     for token, lexeme in specified_tokens:
         print(f'{token:10} {"":10} {lexeme:11}')
+
+
+if __name__ == "__main__":
+    main()

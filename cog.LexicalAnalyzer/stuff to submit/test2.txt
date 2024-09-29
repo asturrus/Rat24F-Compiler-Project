@@ -1,0 +1,18 @@
+function newNumber(n integer) {
+    if (n == 5) 
+    {   
+        return n * 5;
+    } else {
+        n -= 1;
+    }
+}
+
+@
+integer num;
+num = 9;
+while (num > 5) {
+    num = newNumber(num);
+}
+put("Answer: ");
+put(num);
+@

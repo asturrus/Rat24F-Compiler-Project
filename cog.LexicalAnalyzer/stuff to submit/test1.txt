@@ -1,4 +1,1 @@
-integer x = 14;
-while (x < 20) {
-
-}
+while (fahr <= upper) a = 23.00;
