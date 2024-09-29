@@ -1,0 +1,7 @@
+integer x = 14; [* Initialization of x *]
+while (x < 20) {
+    x = x + 1;  [* Incrementation of variable x *]
+}
+x = x - 2;      [* Subtract 2 from x *]
+
+return x;       [* Return x *]

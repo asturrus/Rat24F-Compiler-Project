@@ -1,3 +1,5 @@
+[* This is a random function example to demonstrate lexical functionality*]
+
 function newNumber(n integer) {
     if (n == 5) 
     {   
@@ -8,11 +10,11 @@ function newNumber(n integer) {
 }
 
 @
-integer num;
+integer num; [*Decleration of integer num*]
 num = 9;
 while (num > 5) {
     num = newNumber(num);
 }
 put("Answer: ");
-put(num);
+put(num); [*Prints expected output*]
 @
