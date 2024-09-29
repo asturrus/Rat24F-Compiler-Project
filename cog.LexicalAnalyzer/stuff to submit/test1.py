@@ -1,5 +1,5 @@
 import unittest
-from lexer import analyze, classify_token  # Ensure correct imports
+from lexer import analyze, classify_token
 
 class TestLexer(unittest.TestCase):
     
