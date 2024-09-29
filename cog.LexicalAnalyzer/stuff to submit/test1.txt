@@ -1,1 +1,11 @@
+<<<<<<< HEAD
 while (fahr <= upper) a = 23.00;
+=======
+integer x = 14; [* Initialization of x *]
+while (x < 20) {
+    x = x + 1;  [* Incrementation of variable x *]
+}
+x = x - 2;      [* Subtract 2 from x *]
+
+return x;       [* Return x *]
+>>>>>>> 1bee1c27ec94843674da395b6e0806aa34c2a330
