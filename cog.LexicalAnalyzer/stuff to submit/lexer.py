@@ -4,7 +4,7 @@ import re
 
 real = r'\d+\.\d+'
 int = r'\d+'
-identifier = r'[a-z][a-z0-9]*'
+identifier = r'[a-zA-Z][a-zA-Z0-9]*'
 keyword = {"while", "if", "integer", "else", "fi", "return", "get", 
            "put", "true", "false", "boolean", "real", "function",}
 separator = r'[\(\){};,\[\]@]'
