@@ -31,20 +31,8 @@ def analyze(input):
 
 def classify_token(tokens): 
     specified_tokens = []
-    #temp = ""
-    #is_id = False
 
     for i in range(len(tokens)):
-        # if is_id and tokens[i] != '"':
-        #     temp += " " + tokens[i]
-        #     continue
-        # if tokens[i] == '"':
-        #     if is_id:
-        #         # Close the string literal
-        #         specified_tokens.append((temp.strip(), "string literal"))
-        #     is_id = not is_id
-        #     specified_tokens.append((tokens[i], "operator"))
-        
         if tokens[i] == '"' :
             raise ValueError("Error: Quotes aren't apart of syntax rules")
 
