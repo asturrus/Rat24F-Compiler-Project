@@ -30,7 +30,8 @@ def classify_token(tokens):
     specified_tokens = []
 
     for i in range(len(tokens)):
-        if tokens[i] == '"' :
+        # if tokens[i] == '"':
+        if tokens[i] not in token_types:
             raise ValueError("Error: Quotes aren't apart of syntax rules")
 
         elif re.fullmatch(keyword, tokens[i]):
