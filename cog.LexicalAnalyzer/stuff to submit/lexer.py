@@ -27,6 +27,15 @@ def analyze(input):
 
     return [token for token in token_collection if token.strip()]
 
+<<<<<<< Updated upstream
+=======
+def main():
+
+    input_filename = input("Input a valid test file ending in .txt: ")
+    tokens = analyze(input_filename)
+
+    tokens = [token for token in tokens if token]
+>>>>>>> Stashed changes
 
 
 def classify_token(tokens): 
@@ -35,6 +44,7 @@ def classify_token(tokens):
     #is_id = False
 
     for i in range(len(tokens)):
+<<<<<<< Updated upstream
         # if is_id and tokens[i] != '"':
         #     temp += " " + tokens[i]
         #     continue
@@ -62,8 +72,25 @@ def classify_token(tokens):
             specified_tokens.append(("operator", tokens[i]))
 
     return specified_tokens
+=======
+        if is_id and tokens[i] != '"':
+            temp = temp + " " + tokens[i]
+            continue
+        if tokens[i] == '"':
+            if is_id:
+                specified_tokens.append([temp.strip(), "string literal"]) # NOT SURE ON STRING LITERAL TOKEN
+            is_id = not is_id
+            specified_tokens.append([tokens[i], "operator"])
 
 
+
+
+        elif re.match(separator, tokens[i]):
+            specified_tokens.append([tokens[i], "separator"])
+>>>>>>> Stashed changes
+
+
+<<<<<<< Updated upstream
 
 def main():
 
@@ -73,6 +100,23 @@ def main():
     #tokens = [token for token in tokens if tokens]
 
     specified_tokens = classify_token(tokens)
+=======
+            actions = re.findall(r'\b\w{2,}\b|.', tokens[i])
+            for action in actions:
+                specified_tokens.append([action, "operator"])
+
+        elif re.match(keyword, tokens[i]):
+            specified_tokens.append([tokens[i], "keyword"])
+
+        elif re.match(int, tokens[i]):
+            specified_tokens.append([tokens[i], "integer"])
+
+        elif re.match(identifier, tokens[i]):
+            specified_tokens.append([tokens[i], "identifier"])
+
+        elif re.match(real, tokens[i]):
+            specified_tokens.append([tokens[i], "real"])
+>>>>>>> Stashed changes
 
     print (f'{"token":5} {"":20} {"lexeme":6}')
     print (f'{"-"*35}')
