@@ -5,8 +5,7 @@ import re
 real = r'\d+\.\d+'
 int = r'\d+'
 identifier = r'[a-zA-Z][a-zA-Z0-9]*'
-keyword = {"while", "if", "integer", "else", "fi", "return", "get", 
-           "put", "true", "false", "boolean", "real", "function",}
+keyword = r'\b(?:while|if|integer|else|fi|return|get|put|true|false|boolean|real|function)\b'
 separator = r'[\(\){};,\[\]@]'
 operator = r'<=|>=|!=|==|[+\-*/=<>|]'
 
@@ -32,21 +31,24 @@ def analyze(input):
 
 def classify_token(tokens): 
     specified_tokens = []
-    is_string_literal = False
-    temp = ""
+    #temp = ""
+    #is_id = False
 
     for i in range(len(tokens)):
-        if is_string_literal:
-            if tokens[i] != '"':
-                temp += " " + tokens[i]
-            else:
-                # Close the string literal
-                specified_tokens.append((temp.strip(), "string literal"))
-                temp = ""
-                is_string_literal = False
-        elif tokens[i] == '"':
-            is_string_literal = True
-        elif tokens[i] in keyword:
+        # if is_id and tokens[i] != '"':
+        #     temp += " " + tokens[i]
+        #     continue
+        # if tokens[i] == '"':
+        #     if is_id:
+        #         # Close the string literal
+        #         specified_tokens.append((temp.strip(), "string literal"))
+        #     is_id = not is_id
+        #     specified_tokens.append((tokens[i], "operator"))
+        
+        if tokens[i] == '"' :
+            raise ValueError("Error: Quotes aren't apart of syntax rules")
+
+        elif re.fullmatch(keyword, tokens[i]):
             specified_tokens.append(("keyword", tokens[i]))
         elif re.fullmatch(separator, tokens[i]):
             specified_tokens.append(("separator", tokens[i]))
@@ -65,7 +67,7 @@ def classify_token(tokens):
 
 def main():
 
-    input_file = input("Input a valid test file ending in .txt: ")
+    input_file = input("Input a valid test file ending in .txt: \n")
     tokens = analyze(input_file)
 
     #tokens = [token for token in tokens if tokens]
@@ -73,9 +75,9 @@ def main():
     specified_tokens = classify_token(tokens)
 
     print (f'{"token":5} {"":20} {"lexeme":6}')
-    print (f'{"-":31}')
+    print (f'{"-"*35}')
     for token, lexeme in specified_tokens:
-        print(f'{token:10} {"":10} {lexeme:11}')
+        print(f'{token:10} {"":16} {lexeme:11}')
 
 
 if __name__ == "__main__":

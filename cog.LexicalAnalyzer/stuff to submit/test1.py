@@ -4,22 +4,22 @@ from lexer import analyze, classify_token
 class TestLexer(unittest.TestCase):
     
     def test_analyze(self):
-        expected_tokens = ['while', '(', 'fahr', '<=', 'upper', ')', 'a', '=', '23.00', ';']
+        expected_tokens = ['while', '(', 'maxer', '>', 'lower', ')', 'f', '=', '50.00', ';']
         actual_tokens = analyze("test1.txt")
         self.assertEqual(actual_tokens, expected_tokens)
 
     def test_classify_token(self):
-        tokens = ['while', '(', 'fahr', '<=', 'upper', ')', 'a', '=', '23.00', ';']
+        tokens = ['while', '(', 'maxer', '>', 'lower', ')', 'f', '=', '50.00', ';']
         expected_classifications = [
             ('keyword', 'while'),
             ('separator', '('),
-            ('identifier', 'fahr'),
-            ('operator', '<='),
-            ('identifier', 'upper'),
+            ('identifier', 'maxer'),
+            ('operator', '>'),
+            ('identifier', 'lower'),
             ('separator', ')'),
-            ('identifier', 'a'),
+            ('identifier', 'f'),
             ('operator', '='),
-            ('real', '23.00'),
+            ('real', '50.00'),
             ('separator', ';')
         ]
         actual_classifications = classify_token(tokens)

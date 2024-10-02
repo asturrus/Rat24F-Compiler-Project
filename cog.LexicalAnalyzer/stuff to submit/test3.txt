@@ -4,4 +4,9 @@ while (x < 20) {
 }
 x = x - 2;      [* Subtract 2 from x *]
 
-return x;       [* Return x *]
+x * 7;         [* Modifying x by multiplying with 7*]
+
+put(x);         [* Print out x *]
+integer money = x  [* Assign value of x into new variable called money *]
+
+return money;       [* Return money *]

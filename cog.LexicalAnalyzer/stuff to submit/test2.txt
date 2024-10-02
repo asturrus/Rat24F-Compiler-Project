@@ -12,9 +12,17 @@ function newNumber(n integer) {
 @
 integer num; [*Decleration of integer num*]
 num = 9;
+integer count;
+count = 0;
+integer wrong;
+wrong = 100;
 while (num > 5) {
     num = newNumber(num);
+    count += 1;
 }
-put("Answer: ");
+if (num > count) {
+    put(wrong); [*comment*]
+}
 put(num); [*Prints expected output*]
+put(count);
 @

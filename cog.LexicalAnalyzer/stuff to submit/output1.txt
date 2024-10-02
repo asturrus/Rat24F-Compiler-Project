@@ -1,0 +1,13 @@
+Input a valid test file ending in .txt: 
+token                      lexeme
+-----------------------------------
+keyword                     while      
+separator                   (          
+identifier                  maxer      
+operator                    >          
+identifier                  lower      
+separator                   )          
+identifier                  f          
+operator                    =          
+real                        50.00      
+separator                   ;          
