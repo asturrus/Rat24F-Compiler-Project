@@ -1,5 +1,3 @@
-# Anthony Sturrus, Carlos Lopez,
-
 import re
 
 real = r'\d+\.\d+'
@@ -28,8 +26,7 @@ def analyze(input):
     return [token for token in token_collection if token.strip()]
 
 
-
-def classify_token(tokens): 
+def classify_token(tokens):
     specified_tokens = []
 
     for i in range(len(tokens)):
@@ -51,14 +48,10 @@ def classify_token(tokens):
 
     return specified_tokens
 
-
-
 def main():
 
     input_file = input("Input a valid test file ending in .txt: \n")
     tokens = analyze(input_file)
-
-    #tokens = [token for token in tokens if tokens]
 
     specified_tokens = classify_token(tokens)
 
