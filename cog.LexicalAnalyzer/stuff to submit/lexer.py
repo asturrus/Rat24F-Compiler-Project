@@ -30,11 +30,7 @@ def classify_token(tokens):
     specified_tokens = []
 
     for i in range(len(tokens)):
-        # if tokens[i] == '"':
-        if tokens[i] not in token_types:
-            raise ValueError("Error: Quotes aren't apart of syntax rules")
-
-        elif re.fullmatch(keyword, tokens[i]):
+        if re.fullmatch(keyword, tokens[i]):
             specified_tokens.append(("keyword", tokens[i]))
         elif re.fullmatch(separator, tokens[i]):
             specified_tokens.append(("separator", tokens[i]))
@@ -51,11 +47,13 @@ def classify_token(tokens):
 
 def main():
 
-    input_file = input("Input a valid test file ending in .txt: \n")
+    input_file = input("Input a valid test file ending in .txt: ")
     tokens = analyze(input_file)
 
     specified_tokens = classify_token(tokens)
 
+    print("\n")
+    
     print (f'{"token":5} {"":20} {"lexeme":6}')
     print (f'{"-"*35}')
     for token, lexeme in specified_tokens:
