@@ -26,7 +26,10 @@ def next_token():
 
 
 def error(expected):
-    print(f"Syntax Error: Expected {expected}, but got {current_token} ('{current_lexeme}') at line {line_number}")
+    if current_token == 'unknown':
+        print(f"Syntax Error: Unknown symbol '{current_lexeme}' at line {line_number}")
+    else:
+        print(f"Syntax Error: Expected {expected}, but got {current_token} ('{current_lexeme}') at line {line_number}")
     exit(1)
 
 # Grammar functions based on each rule

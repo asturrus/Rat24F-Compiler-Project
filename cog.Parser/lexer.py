@@ -7,9 +7,10 @@ identifier = r'[a-zA-Z][a-zA-Z0-9]*[a-zA-Z]|[a-zA-Z]'
 keyword = r'\b(?:while|if|integer|else|fi|return|get|put|true|false|boolean|real|function)\b'
 separator = r'[\(\){};,\[\]@]'
 operator = r'<=|>=|!=|==|[+\-*/=<>|]'
+unknown = r'[$%#^&~`?_]'
 
 # Combined regex pattern for all token types
-token_types = '|'.join([real, integer, identifier, keyword, separator, operator])
+token_types = '|'.join([real, integer, identifier, keyword, separator, operator, unknown])
 
 def analyze(input_text):
 # Tokenize the input text and return a list of tokens with line numbers
@@ -38,6 +39,8 @@ def classify_token(tokens):
             specified_tokens.append(("identifier", lexeme, line_number))
         elif re.fullmatch(operator, lexeme):
             specified_tokens.append(("operator", lexeme, line_number))
+        elif re.fullmatch(unknown, lexeme):
+            specified_tokens.append(("unknown", lexeme, line_number))
     return specified_tokens
 
 def get_tokens(input_text):

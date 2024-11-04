@@ -1,0 +1,15 @@
+@
+while (maxer > lower) {
+    f = 50.00;
+}
+if (f != 50.00) {
+    return false;
+
+} fi
+
+while (maxer < lower) {
+    f % 50.00;
+}
+
+return true;
+@
