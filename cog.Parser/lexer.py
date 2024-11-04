@@ -1,69 +1,48 @@
 import re
 
 # Tokens defined as regular expressions
-
 real = r'\d+\.\d+'
-int = r'\d+'
-identifier = r'[a-zA-Z][a-zA-Z0-9]*'
+integer = r'\d+'
+identifier = r'[a-zA-Z][a-zA-Z0-9]*[a-zA-Z]|[a-zA-Z]'
 keyword = r'\b(?:while|if|integer|else|fi|return|get|put|true|false|boolean|real|function)\b'
 separator = r'[\(\){};,\[\]@]'
 operator = r'<=|>=|!=|==|[+\-*/=<>|]'
 
+# Combined regex pattern for all token types
+token_types = '|'.join([real, integer, identifier, keyword, separator, operator])
 
-token_types = '|'.join([real, int, identifier, operator, separator])        # conjoined list of all token types (regex)
-
-def analyze(input):
-
-    file = open(input, "r") #OPEN A FILENAME
-    token_collection = [] # Collection of tokens from file read
-    with file:
-        for line in file:
-
-            cleaned_line = re.sub(r'//.*|\[\*.*?\*\]', '', line).strip()        # cleaning the line of comments and whitespace
-
-            line_tokens = re.findall(token_types, cleaned_line)      # all tokens on a single line
-
-            token_collection.extend(line_tokens)        # add all tokens found to the collection
-
-    return [token for token in token_collection if token.strip()] # returning the tokens found
-
+def analyze(input_text):
+    """Tokenize the input text and return a list of tokens with line numbers."""
+    token_collection = []
+    lines = input_text.splitlines()
+    for line_number, line in enumerate(lines, start=1):
+        cleaned_line = re.sub(r'//.*|\[\*.*?\*\]', '', line).strip()  # Remove comments and whitespace
+        line_tokens = re.findall(token_types, cleaned_line)
+        for token in line_tokens:
+            token_collection.append((token, line_number))
+    return token_collection
 
 def classify_token(tokens):
+    """Classify each token and return a list of (type, lexeme, line) tuples."""
     specified_tokens = []
-
-# DFSM to figure out each individual token to its respective lexeme and return that list of specified tokens
-    for i in range(len(tokens)):
-        if re.fullmatch(keyword, tokens[i]):
-            specified_tokens.append(("keyword", tokens[i]))
-        elif re.fullmatch(separator, tokens[i]):
-            specified_tokens.append(("separator", tokens[i]))
-        elif re.fullmatch(int, tokens[i]):
-            specified_tokens.append(("integer", tokens[i]))
-        elif re.fullmatch(real, tokens[i]):
-            specified_tokens.append(("real", tokens[i]))
-        elif re.fullmatch(identifier, tokens[i]):
-            specified_tokens.append(("identifier", tokens[i]))
-        elif re.fullmatch(operator, tokens[i]):
-            specified_tokens.append(("operator", tokens[i]))
-
+    for lexeme, line_number in tokens:
+        if re.fullmatch(keyword, lexeme):
+            specified_tokens.append(("keyword", lexeme, line_number))
+        elif re.fullmatch(separator, lexeme):
+            specified_tokens.append(("separator", lexeme, line_number))
+        elif re.fullmatch(integer, lexeme):
+            specified_tokens.append(("integer", lexeme, line_number))
+        elif re.fullmatch(real, lexeme):
+            specified_tokens.append(("real", lexeme, line_number))
+        elif re.fullmatch(identifier, lexeme):
+            specified_tokens.append(("identifier", lexeme, line_number))
+        elif re.fullmatch(operator, lexeme):
+            specified_tokens.append(("operator", lexeme, line_number))
     return specified_tokens
 
-def main():
-
-# Read the input file analyze it and classify the tokens into a list
-    input_file = input("Input a valid test file ending in .txt: ")
-    tokens = analyze(input_file)
-
+def get_tokens(input_text):
+    """Yield classified tokens with line numbers for the parser."""
+    tokens = analyze(input_text)
     specified_tokens = classify_token(tokens)
-
-# Print statement printing out token then lexeme respectively from the specified token list
-
-    print("\n")
-    print (f'{"token":5} {"":20} {"lexeme":6}')
-    print (f'{"-"*33}')
-    for token, lexeme in specified_tokens:
-        print(f'{token:10} {"":16} {lexeme:11}')
-
-
-if __name__ == "__main__":
-    main()
+    for token_type, lexeme, line in specified_tokens:
+        yield token_type, lexeme, line
