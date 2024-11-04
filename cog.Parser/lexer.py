@@ -23,7 +23,7 @@ def analyze(input_text):
     return token_collection
 
 def classify_token(tokens):
-    """Classify each token and return a list of (type, lexeme, line) tuples."""
+# Classify each token and return a list of (type, lexeme, line) tuples
     specified_tokens = []
     for lexeme, line_number in tokens:
         if re.fullmatch(keyword, lexeme):
@@ -41,7 +41,7 @@ def classify_token(tokens):
     return specified_tokens
 
 def get_tokens(input_text):
-    """Yield classified tokens with line numbers for the parser."""
+# Yield classified tokens with line numbers for the parser
     tokens = analyze(input_text)
     specified_tokens = classify_token(tokens)
     for token_type, lexeme, line in specified_tokens:

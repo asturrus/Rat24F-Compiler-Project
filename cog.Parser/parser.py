@@ -12,19 +12,11 @@ lines = []  # List to hold each line of code for reference
 switch = True  # Toggle to control production rule printing
 
 def print_token():
-<<<<<<< HEAD
 # Prints the current token type and lexeme
     print(f"\nTOKEN: {current_token}                     LEXEME: {current_lexeme}")
 
 def next_token():
 # Get the next token from the lexer, print it, and detect line changes
-=======
-    """Prints the current token type and lexeme."""
-    print(f"\nTOKEN: {current_token}                     LEXEME: {current_lexeme}")
-
-def next_token():
-    """Fetch the next token from the lexer, print it, and detect line changes."""
->>>>>>> cf1990c0c4217da198b517e166cd44c51a6c436c
     global current_token, current_lexeme, line_number
     try:
         current_token, current_lexeme, line_number = next(token_generator)
@@ -190,10 +182,6 @@ def statement_list():
 def statement_list_prime():
     if switch:
         print("<Statement List Prime> ::= <Statement List> | ε")
-<<<<<<< HEAD
-=======
-    # Allow for additional statements or epsilon (no more statements)
->>>>>>> cf1990c0c4217da198b517e166cd44c51a6c436c
     if current_token in {'identifier', 'separator', 'keyword'}:
         if current_token == 'identifier' or current_lexeme in {'{', 'if', 'return', 'put', 'get', 'while'}:
             statement_list()  # Recurse for additional statements
