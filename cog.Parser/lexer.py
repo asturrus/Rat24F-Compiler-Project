@@ -12,7 +12,7 @@ operator = r'<=|>=|!=|==|[+\-*/=<>|]'
 token_types = '|'.join([real, integer, identifier, keyword, separator, operator])
 
 def analyze(input_text):
-    """Tokenize the input text and return a list of tokens with line numbers."""
+# Tokenize the input text and return a list of tokens with line numbers
     token_collection = []
     lines = input_text.splitlines()
     for line_number, line in enumerate(lines, start=1):
