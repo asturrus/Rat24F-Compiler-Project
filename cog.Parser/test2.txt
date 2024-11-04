@@ -1,0 +1,25 @@
+[* This is a random function example to demonstrate lexical functionality*]
+
+function newNumber(n integer) {
+    if (n == 5)
+    {
+        return n * 5;
+    } else {
+        n =- 1;
+    } fi
+}
+@
+integer num; [*Decleration of integer num*]
+num = 9;
+count = 0;
+wrong = 100;
+while (num > 5) {
+    num = newNumber(num);
+    count = count + 1;
+}
+if (num > count) {
+    put(wrong); [*comment*]
+} fi
+put(num); [*Prints expected output*]
+put(count);
+@
