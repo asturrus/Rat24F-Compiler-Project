@@ -2,13 +2,16 @@
 while (maxer > lower) {
     f = 50.00;
 }
+
 if (f != 50.00) {
     return false;
-
 } fi
+
+[*An error is to be expected with the following chunk of code "%" unknown symbol*]
+
+while (maxer < lower) {
+    f % 50.00;
+}
 
 return true;
 @
-
-
-

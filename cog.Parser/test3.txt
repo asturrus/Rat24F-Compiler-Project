@@ -1,14 +1,14 @@
 function tests() {
-    integer x; [* Initialization of x *]
     while (x < 20) {
         x = x + 1;  [* Incrementation of variable x *]
     }
-    x = x - 2;      [* Subtract 2 from x *]
-
-    x = x * 7;         [* Modifying x by multiplying with 7*]
-
-    put(x);         [* Print out x *]
-    integer money = x  [* Assign value of x into new variable called money *]
-
-    return money;       [* Return money *]
 }
+@
+y = 20; [* Initialization of x *]
+p = tests(y);
+p = p - 2;      [* Subtract 2 from x *]
+p = p * 7;         [* Modifying x by multiplying with 7*]
+put(p);
+money = x; [* Assign value of x into new variable called money *]
+return money;       [* Return money *]
+@
