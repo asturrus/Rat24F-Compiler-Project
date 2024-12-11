@@ -13,19 +13,14 @@ instr_add = 1
 
 # Assembly Instruction Stack Array
 
-# def back_patch(jump_addr):
-#     addr = jumpstack.pop()
-#     instructions[] = jump_addr
-
 def back_patch(jump_addr):
     global instructions
-    for i, instruction in enumerate(instructions):
-        if ("JUMPZ" in instruction and "None" in instruction) or ("JUMP" in instruction and "None" in instruction):
-            # Split the instruction to extract and modify the operand
-            parts = instruction.split()
-            parts[-1] = str(jump_addr)  # Replace 'None' with the jump address
-            instruction[i] = " ".join(parts)
-            break
+    # Pop the instruction address stored in jumpstack
+    addr = jumpstack.pop()
+    parts = instructions[addr - 1].split()  # Convert instruction to a list of parts
+    parts[-1] = str(jump_addr)  # Replace the operand (last part) with the jump address
+    instructions[addr - 1] = " ".join(parts)  # Reassemble the instruction back to a string
+
 
 instructions = []
 
@@ -52,12 +47,12 @@ def add_symbol():
         memory_address += 1
 
 def print_assem_instruct():
-    # for i in range(len(instructions) - 1, -1, -1):
+    print('\n')
     for i in instructions:
         print(i)
 
 def print_sym_table():
-    print(f'{"Symbol":7}{"":10}{"Memory Address":18}{"Type":7}''\n')
+    print('\n'f'{"Symbol":7}{"":10}{"Memory Address":18}{"Type":7}''\n')
     for i in symbol_table:
         print(f'{i:7}{"":8}{symbol_table[i]:6}{"":13}{"Integer":7}')
 
@@ -308,6 +303,7 @@ def if_statement():
                 next_token()
                 statement()
                 back_patch(instr_add)
+                gen_instr("LABEL", None)
                 if current_lexeme == 'fi':
                     next_token()
                 elif current_lexeme == 'else':
@@ -407,45 +403,38 @@ def condition():
         print("<Condition> ::= <Expression> <Relop> <Expression>")
     expression()
     relop()
-    expression()
+
 
 def relop():
     if switch:
         print("<Relop> ::= == | != | > | < | <= | =>")
     if current_lexeme in ['==', '!=', '>', '<', '<=', '=>']:
-
-        if current_lexeme == "<":
-            gen_instr("LES", None)
-            jumpstack.append(instr_add)
-            gen_instr("JUMPZ", None)
-
-        if current_lexeme == ">":
-            gen_instr("GRT", None)
-            jumpstack.append(instr_add)
-            gen_instr("JUMPZ", None)
-
-        if current_lexeme == "!=":
-            gen_instr("NEQ", None)
-            jumpstack.append(instr_add)
-            gen_instr("JUMPZ", None)
-
-        if current_lexeme == "==":
-            gen_instr("EQU", None)
-            jumpstack.append(instr_add)
-            gen_instr("JUMPZ", None)
-
-        if current_lexeme == "=>":
-            gen_instr("GEQ", None)
-            jumpstack.append(instr_add)
-            gen_instr("JUMPZ", None)
-
-        if current_lexeme == "<=":
-            gen_instr("LEQ", None)
-            jumpstack.append(instr_add)
-            gen_instr("JUMPZ", None)
-
-
+        temp = current_lexeme
         next_token()
+        expression()
+
+        if temp == "<":
+            gen_instr("LES", None)
+
+        elif current_lexeme == ">":
+            gen_instr("GRT", None)
+
+        elif current_lexeme == "!=":
+            gen_instr("NEQ", None)
+
+        elif current_lexeme == "==":
+            gen_instr("EQU", None)
+
+        elif current_lexeme == "=>":
+            gen_instr("GEQ", None)
+
+        elif current_lexeme == "<=":
+            gen_instr("LEQ", None)
+
+        jumpstack.append(instr_add)
+        gen_instr("JUMPZ", "nil")
+
+
     else:
         error("relational operator")
 
